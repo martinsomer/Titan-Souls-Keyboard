@@ -20,7 +20,7 @@ bool transitionedToPressed(int key) {
 
 int getPrefsInt(const char* section, const char* key, int defaultValue) {
 	int result = GetPrivateProfileIntA(section, key, -1, "./prefs.ini");
-	return result != -1 ? result : defaultValue;
+	return result == -1 ? defaultValue : result;
 }
 
 int getPrefsHex(const char* section, const char* key, int defaultValue) {
@@ -31,7 +31,7 @@ int getPrefsHex(const char* section, const char* key, int defaultValue) {
 
 	int result = -1;
 	StrToIntExA(value, STIF_SUPPORT_HEX, &result);
-	return result != -1 ? result : defaultValue;
+	return result == -1 ? defaultValue : result;
 }
 
 int main(void) {
