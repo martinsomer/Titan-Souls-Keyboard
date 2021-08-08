@@ -19,14 +19,14 @@ bool transitionedToPressed(int key) {
 }
 
 int getPrefsInt(const char* section, const char* key, int defaultValue) {
-	int result = GetPrivateProfileIntA(section, key, -1, "./prefs.ini");
+	int result = GetPrivateProfileIntA(section, key, -1, "./config.ini");
 	return result == -1 ? defaultValue : result;
 }
 
 int getPrefsHex(const char* section, const char* key, int defaultValue) {
 	int length = 5;
 	char value[length];
-	GetPrivateProfileStringA(section, key, NULL, value, length, "./prefs.ini");
+	GetPrivateProfileStringA(section, key, NULL, value, length, "./config.ini");
 	if (value == NULL) return defaultValue;
 
 	int result = -1;

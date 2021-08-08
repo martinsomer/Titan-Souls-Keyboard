@@ -14,7 +14,7 @@ Keyboard and mouse support for Titan Souls
 * Activate keyboard mode by pressing the hotkey
 
 ## Configuration
-The following settings can be adjusted in `prefs.ini`:
+The following settings can be adjusted in `config.ini`:
 | Option | Description | Default Value |
 | :---: | :---: | :---: |
 | Up | Move up | W (0x57) |
