@@ -59,7 +59,7 @@ int main(void) {
 		.camera = getPrefsHex("Controls", "Camera", 0x02),
 		.sensitivity = getPrefsInt("Camera", "Sensitivity", 100),
 		.delay = getPrefsInt("General", "Delay", 10),
-		.hotkey = getPrefsHex("General", "Hotkey", 0x7B),
+		.hotkey = getPrefsHex("General", "Hotkey", 0x73),
 	};
 
 	// Get desktop window's center

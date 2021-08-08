@@ -26,7 +26,7 @@ The following settings can be adjusted in `config.ini`:
 | Camera | Hold to move camera with mouse | Right Mouse (0x02) |
 | Sensitivity | Lower is more sensitive | 100 |
 | Delay | Number of milliseconds between updates | 10 |
-| Hotkey | Toggle keyboard mode on/off | F12 (0x7B) |
+| Hotkey | Toggle keyboard mode on/off | F4 (0x73) |
 
 ## Dependencies
 * [vXboxInterface](https://github.com/shauleiz/vXboxInterface)
