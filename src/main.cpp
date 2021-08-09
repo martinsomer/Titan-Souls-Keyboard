@@ -140,46 +140,42 @@ int main(void) {
 			SetBtnX(device, false);
 		}
 		
-		// Fire or camera button held down
-		if ((fireBtnWasPressed && fireBtnIsPressed) || (cameraBtnWasPressed && cameraBtnIsPressed)) {
-			GetCursorPos(&mousePos);
+		// Calculate mouse distance from center of screen
+		GetCursorPos(&mousePos);
+		int distX = mousePos.x - center.x;
+		int distY = mousePos.y - center.y;
 
-			// Calculate mouse distance from center of screen
-			int distX = mousePos.x - center.x;
-			int distY = mousePos.y - center.y;
+		float dist = sqrt(distX * distX + distY * distY);
+		if (dist == 0) continue;
 
-			float dist = sqrt(distX * distX + distY * distY);
-			if (dist == 0) continue;
+		// If mouse is outside allowed radius, move to closest valid position
+		if (dist > prefs.sensitivity) {
+			int mx = center.x + (float) distX / dist * prefs.sensitivity;
+			int my = center.y + (float) distY / dist * prefs.sensitivity;
 
-			// If mouse is outside allowed radius, move to closest valid position
-			if (dist > prefs.sensitivity) {
-				int mx = center.x + (float) distX / dist * prefs.sensitivity;
-				int my = center.y + (float) distY / dist * prefs.sensitivity;
+			SetCursorPos(mx, my);
+		}
 
-				SetCursorPos(mx, my);
-			}
+		// Normalize mouse X, Y value to 0...1
+		float normalizedX = (float) (mousePos.x - (center.x - prefs.sensitivity)) / (float) (2 * prefs.sensitivity);
+		if (normalizedX < 0) normalizedX = 0;
+		if (normalizedX > 1) normalizedX = 1;
 
-			// Normalize mouse X, Y value to 0...1
-			float normalizedX = (float) (mousePos.x - (center.x - prefs.sensitivity)) / (float) (2 * prefs.sensitivity);
-			if (normalizedX < 0) normalizedX = 0;
-			if (normalizedX > 1) normalizedX = 1;
+		float normalizedY = (float) (mousePos.y - (center.y - prefs.sensitivity)) / (float) (2 * prefs.sensitivity);
+		if (normalizedY < 0) normalizedY = 0;
+		if (normalizedY > 1) normalizedY = 1;
 
-			float normalizedY = (float) (mousePos.y - (center.y - prefs.sensitivity)) / (float) (2 * prefs.sensitivity);
-			if (normalizedY < 0) normalizedY = 0;
-			if (normalizedY > 1) normalizedY = 1;
+		// Calculate joystick X, Y
+		int joystickX = -32767 + normalizedX * 32767 * 2;
+		int joystickY = 32767 - normalizedY * 32767 * 2;
 
-			// Calculate joystick X, Y
-			int joystickX = -32767 + normalizedX * 32767 * 2;
-			int joystickY = 32767 - normalizedY * 32767 * 2;
-
-			// Update Left / Right joystick position
-			if (fireBtnIsPressed) {
-				SetAxisX(device, joystickX);
-				SetAxisY(device, joystickY);
-			} else if (cameraBtnIsPressed) {
-				SetAxisRx(device, joystickX);
-				SetAxisRy(device, joystickY);
-			}
+		// Update Left / Right joystick position
+		if (fireBtnWasPressed && fireBtnIsPressed) {
+			SetAxisX(device, joystickX);
+			SetAxisY(device, joystickY);
+		} else if (cameraBtnWasPressed && cameraBtnIsPressed) {
+			SetAxisRx(device, joystickX);
+			SetAxisRy(device, joystickY);
 		}
 
 		Sleep(prefs.delay);
